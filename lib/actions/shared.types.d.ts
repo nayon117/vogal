@@ -23,3 +23,15 @@ export interface CreateUserParams {
   export interface DeleteUserParams {
     clerkId: string;
   }
+
+  export interface ProductType  {
+    _id: string;
+    title: string;
+    description: string;
+    category: string;
+    price: number;
+    sizes: [string];
+    colors: [string];
+    createdAt: string;
+    updatedAt: string;
+  };

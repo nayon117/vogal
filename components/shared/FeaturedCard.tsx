@@ -3,16 +3,20 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Heart, ShoppingCart, Eye } from "lucide-react";
+import useCart from "@/lib/hooks/useCart";
+import { Button } from "../ui/button";
 
 interface CardProps {
+  _id: string;
   title: string;
   price: number;
   imgSrc: string;
   colors?: string[];
 }
 
-const FeaturedCard = ({ title, price, colors, imgSrc }: CardProps) => {
+const FeaturedCard = ({ _id,title, price, colors, imgSrc }: CardProps) => {
   const [hover, setHover] = useState(false);
+  const cart = useCart();
 
   return (
     <Card
@@ -32,7 +36,16 @@ const FeaturedCard = ({ title, price, colors, imgSrc }: CardProps) => {
           {hover && (
             <div className="absolute inset-x-0 bottom-0 flex justify-center space-x-4 bg-black py-2 opacity-50">
               <Heart className="size-6 cursor-pointer text-white hover:text-red-500" />
-              <ShoppingCart className="size-6 cursor-pointer text-white hover:text-green-500" />
+             <Button 
+              onClick={() => {
+                cart.addItem({
+                  _id,
+                  title,
+                  price,
+                  imgSrc
+                });
+              }}
+             > <ShoppingCart className="size-6 cursor-pointer text-white hover:text-green-500" /></Button>
               <Eye className="size-6 cursor-pointer text-white hover:text-blue-500" />
             </div>
           )}

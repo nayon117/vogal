@@ -3,7 +3,7 @@ export interface NavbarLink {
     label: string;
   }
 
- 
+
   
 
   

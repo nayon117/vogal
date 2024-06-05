@@ -12,9 +12,10 @@ const TopSeller = () => {
         <h1 className="mb-6 text-center text-2xl font-semibold">Top Sellers</h1>
       </div>
       <Swiper spaceBetween={50} slidesPerView={4}>
-        {topSeller?.map((item, index) => (
-          <SwiperSlide key={index}>
+        {topSeller?.map((item) => (
+          <SwiperSlide key={item._id}>
             <FeaturedCard
+              _id={item._id}
               title={item.title}
               price={item.price}
               imgSrc={item.imgSrc}

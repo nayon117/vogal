@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { navbarLinks } from "@/constants";
 import MobileNav from "./MobileNav";
+import useCart from "@/lib/hooks/useCart";
 
 const Navbar = () => {
+  const cart = useCart();
   return (
     <nav className=" fixed z-50 flex  w-full items-center justify-between gap-4 p-4  sm:px-12">
       <Link className="flex items-center gap-1" href="/">
-        <p className=" max-sm:hidden">
-         Vogal
-        </p>
+        <p className=" max-sm:hidden">Vogal</p>
       </Link>
 
       <div className="flex gap-2">
@@ -31,34 +31,24 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center">
-        <SignedOut>
-          <div className="flex gap-2">
+        <div className="mr-2">
           <Image
-                  src="/assets/icons/search.svg"
-                  alt="login"
-                  width={20}
-                  height={20}
-                />
+            src="/assets/icons/search.svg"
+            alt="login"
+            width={20}
+            height={20}
+          />
+        </div>
+        <SignedOut>
+          <div className="mr-2 flex gap-2">
             <Link href="/sign-in">
-                <Image
-                  src="/assets/icons/account.svg"
-                  alt="login"
-                  width={20}
-                  height={20}
-                />
+              <Image
+                src="/assets/icons/account.svg"
+                alt="login"
+                width={20}
+                height={20}
+              />
             </Link>
-            <Image
-                  src="/assets/icons/heart.svg"
-                  alt="login"
-                  width={20}
-                  height={20}
-                />
-            <Image
-                  src="/assets/icons/cart.svg"
-                  alt="login"
-                  width={20}
-                  height={20}
-                />
           </div>
         </SignedOut>
         <SignedIn>
@@ -74,6 +64,23 @@ const Navbar = () => {
             }}
           />
         </SignedIn>
+        <div className="flex items-center gap-2">
+          <Image
+            src="/assets/icons/heart.svg"
+            alt="login"
+            width={20}
+            height={20}
+          />
+          <div className="flex items-center">
+          <Image
+            src="/assets/icons/cart.svg"
+            alt="login"
+            width={20}
+            height={20}
+          />
+          <p>{cart.cartItems.length}</p>
+          </div>
+        </div>
         <MobileNav />
       </div>
     </nav>
