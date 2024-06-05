@@ -78,3 +78,74 @@ export const newArrival = [
   },
 
 ]
+export const topSeller = [
+  {
+    title: "Everyday Tube Top Ribbed",
+    price: 180,
+    imgSrc: "/assets/images/f1.webp",
+  },
+  {
+    title: "Long Maxi Dress",
+    price: 70.00,
+    imgSrc: "/assets/images/f2.webp",
+  },
+  {
+    title: "Solid Cargo Pant",
+    price: 56.00,
+    imgSrc: "/assets/images/f3.webp",
+  },
+  {
+    title: "Knee Length Denim Skirts",
+    price: 65.00,
+    imgSrc: "/assets/images/f4.webp",
+  },
+  {
+    title: "Crossbody Bag with Chain Strap",
+    price: 140.00,
+    imgSrc: "/assets/images/f5.webp",
+  },
+  {
+    title: "Toe Slip-On Shoes Black",
+    price: 85.00,
+    imgSrc: "/assets/images/f6.webp",
+  },
+  {
+    title: "Polo Solid Short Jumpsuits",
+    price: 100.00,
+    imgSrc: "/assets/images/f7.webp",
+  },
+  {
+    title: "Tokyo Short Floral Dress",
+    price: 140.00,
+    imgSrc: "/assets/images/f8.webp",
+  },
+
+]
+
+export const blogs = [
+  {
+    title: "Spotlighting the new role model",
+    imgSrc: "/assets/images/b1.webp",
+  },
+  {
+    title: "Fresh work outfits for the year",
+    imgSrc: "/assets/images/b2.webp",
+  },
+  {
+    title: "Match Outfit with other significants",
+    imgSrc: "/assets/images/b3.webp",
+  },
+  {
+    title: "Spotlighting the new role model",
+    imgSrc: "/assets/images/b1.webp",
+  },
+  {
+    title: "Fresh work outfits for the year",
+    imgSrc: "/assets/images/b2.webp",
+  },
+  {
+    title: "Match Outfit with other significants",
+    imgSrc: "/assets/images/b3.webp",
+  },
+ 
+]

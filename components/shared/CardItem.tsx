@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 
 interface CardProps {
   title: string;
-  btnText: string;
+  btnText?: string;
   imgSrc: string;
 }
 
@@ -19,7 +19,7 @@ const CardItem = ({ title, btnText, imgSrc }: CardProps) => {
           height={400}
           className="mx-auto cursor-pointer object-cover hover:scale-95"
         />
-        <CardTitle className="mx-auto pt-3">{title}</CardTitle>
+        <CardTitle className="mx-auto pt-3 text-lg">{title}</CardTitle>
       </CardHeader>
       <CardFooter>
         <Button className="mx-auto border bg-white text-black hover:text-white">
