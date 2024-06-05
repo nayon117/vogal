@@ -18,10 +18,12 @@
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.17.0",
     "lucide-react": "^0.383.0",
+    "mongoose": "^8.4.1",
     "next": "14.2.3",
     "prettier": "^3.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "svix": "^1.24.0",
     "swiper": "^11.1.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"
