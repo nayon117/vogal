@@ -1,9 +1,15 @@
+import Image from "next/image";
 
 const HomePage = () => {
     return (
         <section className=''>
             <div className=''>
-                Welcome to HomePage
+               <Image 
+               src='/assets/images/banner.png'
+               alt="banner image"
+                width={1920}
+                height={1080}
+               />
             </div>
         </section>
     )
