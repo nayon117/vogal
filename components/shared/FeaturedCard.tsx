@@ -42,6 +42,7 @@ const FeaturedCard = ({ _id,title, price, colors, imgSrc }: CardProps) => {
                   _id,
                   title,
                   price,
+                  quantity: 1,
                   imgSrc
                 });
               }}

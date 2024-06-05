@@ -6,6 +6,7 @@ interface CartItem {
   _id: string;
   title: string;
   price: number;
+  quantity: number;
   imgSrc: string;
 }
 
@@ -13,6 +14,8 @@ interface CartStore {
   cartItems: CartItem[];
   addItem: (item: CartItem) => void;
   removeItem: (idToRemove: string) => void;
+  increaseQuantity: (idToIncrease: string) => void;
+  decreaseQuantity: (idToDecrease: string) => void;
   clearCart: () => void;
 }
 
@@ -32,7 +35,7 @@ const useCart = create(
         }
 
         set({
-          cartItems: [...currentItems, { _id, title, price, imgSrc }],
+          cartItems: [...currentItems, { _id, title, price, imgSrc,quantity:1 }],
         });
         toast.success("Item added to cart", { icon: "🛒" });
       },
@@ -42,6 +45,24 @@ const useCart = create(
         );
         set({ cartItems: newCartItems });
         toast.success("Item removed from cart");
+      },
+      increaseQuantity: (idToIncrease: String) => {
+        const newCartItems = get().cartItems.map((cartItem) =>
+          cartItem._id === idToIncrease
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+        set({ cartItems: newCartItems });
+        toast.success("Item quantity increased");
+      },
+      decreaseQuantity: (idToDecrease: String) => {
+        const newCartItems = get().cartItems.map((cartItem) =>
+          cartItem._id === idToDecrease
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem
+        );
+        set({ cartItems: newCartItems });
+        toast.success("Item quantity decreased");
       },
       clearCart: () => set({ cartItems: [] }),
     }),

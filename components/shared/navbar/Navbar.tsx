@@ -71,15 +71,16 @@ const Navbar = () => {
             width={20}
             height={20}
           />
-          <div className="flex items-center">
-          <Image
+         <Link href={`/cart`} className="flex items-center">
+         <Image
             src="/assets/icons/cart.svg"
             alt="login"
             width={20}
             height={20}
           />
-          <p>{cart.cartItems.length}</p>
-          </div>
+          <p>({cart.cartItems.length})</p>
+         </Link>
+  
         </div>
         <MobileNav />
       </div>

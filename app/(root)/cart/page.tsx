@@ -1,9 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import useCart from "@/lib/hooks/useCart";
 
 import { useUser } from "@clerk/nextjs";
-import { Trash } from "lucide-react";
+import { MinusCircle, PlusCircle, Trash } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +14,7 @@ const Cart = () => {
   const cart = useCart();
 
   const total = cart.cartItems.reduce(
-    (acc, cartItem) => acc + cartItem.price,
+    (acc, cartItem) => acc + cartItem.price * cartItem.quantity,
     0
   );
   const totalRounded = parseFloat(total.toFixed(2));
@@ -29,7 +30,7 @@ const Cart = () => {
       if (!user) {
         router.push("sign-in");
       } else {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/webhooks/stripe`, {
           method: "POST",
           body: JSON.stringify({ cartItems: cart.cartItems, customer }),
         });
@@ -72,6 +73,18 @@ const Cart = () => {
                   </div>
                 </div>
 
+                <div className="flex items-center gap-4">
+                  <MinusCircle
+                    className="cursor-pointer hover:text-red-100"
+                    onClick={() => cart.decreaseQuantity(cartItem._id)}
+                  />
+                  <p className="font-bold">{cartItem.quantity}</p>
+                  <PlusCircle
+                    className="cursor-pointer hover:text-red-100"
+                    onClick={() => cart.increaseQuantity(cartItem._id)}
+                  />
+                </div>
+
                 <Trash
                   className="cursor-pointer hover:text-red-100"
                   onClick={() => cart.removeItem(cartItem._id)}
@@ -93,12 +106,9 @@ const Cart = () => {
           <span>Total Amount</span>
           <span>$ {totalRounded}</span>
         </div>
-        <button
-          className="w-full rounded-lg border bg-white py-3 font-bold hover:bg-black hover:text-white"
-          onClick={handleCheckout}
-        >
+        <Button className="w-full rounded-lg border " onClick={handleCheckout}>
           Proceed to Checkout
-        </button>
+        </Button>
       </div>
     </div>
   );
