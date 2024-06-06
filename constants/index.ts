@@ -26,8 +26,8 @@ export const navbarLinks: NavbarLink[] = [
     label: "PAGES",
   },
   {
-    route: "/blog",
-    label: "BLOG",
+    route: "/cart",
+    label: "CART",
   },
   {
     route: "/dashboard",
