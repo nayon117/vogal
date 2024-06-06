@@ -5,5 +5,16 @@ export interface NavbarLink {
 
 
   
-
+  export interface OrderColumnType  {
+    _id: string;
+    customer: string;
+    products: number;
+    totalAmount: number;
+    createdAt: string;
+  }
   
+  export interface CustomerType  {
+    clerkId: string;
+    name: string;
+    email: string;
+  }
