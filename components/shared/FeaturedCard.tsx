@@ -6,6 +6,7 @@ import { Heart, ShoppingCart, Eye } from "lucide-react";
 import useCart from "@/lib/hooks/useCart";
 import { Button } from "../ui/button";
 
+// props for the card component
 interface CardProps {
   id: string;
   title: string;
@@ -14,7 +15,7 @@ interface CardProps {
   colors?: string[];
 }
 
-const FeaturedCard = ({ id,title, price, colors, imgSrc }: CardProps) => {
+const FeaturedCard = ({ id, title, price, colors, imgSrc }: CardProps) => {
   const [hover, setHover] = useState(false);
   const cart = useCart();
 
@@ -34,19 +35,22 @@ const FeaturedCard = ({ id,title, price, colors, imgSrc }: CardProps) => {
             className={`mx-auto cursor-pointer object-cover transition-transform duration-300 ${hover ? "scale-105" : "scale-100"}`}
           />
           {hover && (
-            <div className="absolute inset-x-0 bottom-0 flex justify-center space-x-4 bg-black py-2 opacity-50">
+            <div className="absolute inset-x-0 bottom-0 flex items-center justify-center space-x-4 bg-black py-2 opacity-50">
               <Heart className="size-6 cursor-pointer text-white hover:text-red-500" />
-             <Button 
-              onClick={() => {
-                cart.addItem({
-                  id,
-                  title,
-                  price,
-                  quantity: 1,
-                  imgSrc
-                });
-              }}
-             > <ShoppingCart className="size-6 cursor-pointer text-white hover:text-green-500" /></Button>
+              <Button
+                onClick={() => {
+                  cart.addItem({
+                    id,
+                    title,
+                    price,
+                    quantity: 1,
+                    imgSrc,
+                  });
+                }}
+              >
+                {" "}
+                <ShoppingCart className="size-6 cursor-pointer text-white hover:text-green-500" />
+              </Button>
               <Eye className="size-6 cursor-pointer text-white hover:text-blue-500" />
             </div>
           )}

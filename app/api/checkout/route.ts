@@ -1,7 +1,7 @@
 import { stripe } from "@/lib/stripe";
 import { NextRequest, NextResponse } from "next/server";
 
-
+// Set CORS headers to allow cross-origin requests
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -12,6 +12,7 @@ export async function OPTIONS() {
   return NextResponse.json({}, { headers: corsHeaders });
 }
 
+// Handle POST request to create a Stripe checkout session
 export async function POST(req: NextRequest) {
   try {
     const { cartItems, customer } = await req.json();
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Not enough data to checkout", { status: 400 });
     }
 
+     // Create a new Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",

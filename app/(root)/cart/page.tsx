@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import useCart from "@/lib/hooks/useCart";
-
 import { useUser } from "@clerk/nextjs";
 import { MinusCircle, PlusCircle, Trash } from "lucide-react";
 import Image from "next/image";
@@ -13,30 +12,35 @@ const Cart = () => {
   const { user } = useUser();
   const cart = useCart();
 
+  // Calculate total price of items in the cart
   const total = cart.cartItems.reduce(
     (acc, cartItem) => acc + cartItem.price * cartItem.quantity,
     0
   );
   const totalRounded = parseFloat(total.toFixed(2));
 
+  // Customer information
   const customer = {
     clerkId: user?.id,
     email: user?.emailAddresses[0].emailAddress,
     name: user?.fullName,
   };
 
+   // Handle the checkout process
   const handleCheckout = async () => {
     try {
       if (!user) {
         router.push("sign-in");
       } else {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkout`, {
-          method: "POST",
-          body: JSON.stringify({ cartItems: cart.cartItems, customer }),
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/checkout`,
+          {
+            method: "POST",
+            body: JSON.stringify({ cartItems: cart.cartItems, customer }),
+          }
+        );
         const data = await res.json();
         window.location.href = data.url;
-        console.log(data);
       }
     } catch (err) {
       console.log("[checkout_POST]", err);

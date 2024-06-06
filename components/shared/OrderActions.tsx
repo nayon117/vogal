@@ -47,7 +47,7 @@ const OrderActions = ({ orderDetails, customer, orderId }: any) => {
       console.error("Error deleting order:", error);
       toast.error("Failed to delete the order.");
     } finally {
-      setIsModalOpen(false); 
+      setIsModalOpen(false);
     }
   };
 

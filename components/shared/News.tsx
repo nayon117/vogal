@@ -12,16 +12,13 @@ const News = () => {
         <h2 className="text-center text-2xl font-semibold">News & Articles</h2>
       </div>
       <div className="mt-6">
-      <Swiper spaceBetween={50} slidesPerView={3}>
-        {blogs?.map((item, index) => (
-          <SwiperSlide key={index}>
-            <CardItem
-              title={item.title} 
-              imgSrc={item.imgSrc}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <Swiper spaceBetween={50} slidesPerView={3}>
+          {blogs?.map((item, index) => (
+            <SwiperSlide key={index}>
+              <CardItem title={item.title} imgSrc={item.imgSrc} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );

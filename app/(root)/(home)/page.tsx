@@ -17,9 +17,14 @@ const HomePage = () => {
         />
         <TopCategories />
         <NewArrival />
+        
+        {/* Explore section */}
         <div>
           <div className="mx-auto mt-12 p-4">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+            <div className="text-center text-2xl font-semibold">
+              There&apos;s More to Explore
+            </div>
+            <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
               {/* Women Section */}
               <div className="relative">
                 <Image
@@ -78,9 +83,9 @@ const HomePage = () => {
           </div>
         </div>
 
-        <TopSeller/>
-        <News/>
-        <InfoBar/>
+        <TopSeller />
+        <News />
+        <InfoBar />
       </div>
     </section>
   );

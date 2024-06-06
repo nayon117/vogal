@@ -4,7 +4,7 @@ import { Package, MessageCircle, RotateCcw, Shield } from "lucide-react";
 
 const InfoBar = () => {
   return (
-    <div className="bg-black py-4 text-white">
+    <div className="bg-gray-800 py-4 text-white">
       <div className="container mx-auto flex justify-between">
         <div className="flex items-center space-x-2">
           <Package className="size-6" />

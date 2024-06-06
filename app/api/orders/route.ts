@@ -4,6 +4,7 @@ import { connectToDatabase } from "@/lib/mongoose";
 import Order from "@/database/models/order.model";
 import Customer from "@/database/models/customer.model";
 
+// get all orders
 export const GET = async (req: NextRequest) => {
   try {
     await connectToDatabase();
@@ -25,7 +26,6 @@ export const GET = async (req: NextRequest) => {
       })
     );
 
-    console.log(orderDetails)
     return NextResponse.json(orderDetails, { status: 200 });
   } catch (err) {
     console.log("[orders_GET]", err);

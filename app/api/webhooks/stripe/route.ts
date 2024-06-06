@@ -5,11 +5,14 @@ import { connectToDatabase } from "@/lib/mongoose";
 import Order from "@/database/models/order.model";
 import Customer from "@/database/models/customer.model";
 
+
+// Handle POST request to create a Stripe checkout session
 export const POST = async (req: NextRequest) => {
   try {
     const rawBody = await req.text()
     const signature = req.headers.get("Stripe-Signature") as string
 
+    // Verify the payload with the headers
     const event = stripe.webhooks.constructEvent(
       rawBody,
       signature,
@@ -50,6 +53,7 @@ export const POST = async (req: NextRequest) => {
 
       await connectToDatabase()
 
+      // Create a new order with the retrieved details
       const newOrder = new Order({
         customerClerkId: customerInfo.clerkId,
         products: orderItems,
@@ -63,8 +67,10 @@ export const POST = async (req: NextRequest) => {
       let customer = await Customer.findOne({ clerkId: customerInfo.clerkId })
 
       if (customer) {
+         // If customer exists, add the new order ID to their orders
         customer.orders.push(newOrder._id)
       } else {
+        // If customer does not exist, create a new customer
         customer = new Customer({
           ...customerInfo,
           orders: [newOrder._id],

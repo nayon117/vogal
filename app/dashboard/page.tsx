@@ -1,15 +1,24 @@
 import SalesChart from "@/components/shared/SalesChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { getSalesPerMonth, getTotalCustomers, getTotalSales } from "@/lib/actions/order.action";
+import {
+  getSalesPerMonth,
+  getTotalCustomers,
+  getTotalSales,
+} from "@/lib/actions/order.action";
 
 import { CircleDollarSign, ShoppingBag, UserRound } from "lucide-react";
 
 export default async function Home() {
+  
+  // Fetch total sales and extract total revenue and total orders
   const totalRevenue = await getTotalSales().then((data) => data.totalRevenue);
   const totalOrders = await getTotalSales().then((data) => data.totalOrders);
+
+    // Fetch total customers count
   const totalCustomers = await getTotalCustomers();
 
+  // Fetch sales data for the graph
   const graphData = await getSalesPerMonth();
 
   return (
@@ -17,6 +26,7 @@ export default async function Home() {
       <p className="font-bold text-gray-800">Admin Dashboard</p>
       <Separator className="my-5 bg-gray-200" />
 
+      {/* Display total revenue, total orders, and total customers */}
       <div className="grid grid-cols-2 gap-10 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
@@ -49,6 +59,7 @@ export default async function Home() {
         </Card>
       </div>
 
+      {/* Display sales chart */}
       <Card className="mt-10">
         <CardHeader>
           <CardTitle>Sales Chart ($)</CardTitle>

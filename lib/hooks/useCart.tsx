@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { toast } from "react-hot-toast";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+// Define the interface for the Cart Item
 interface CartItem {
   id: string;
   title: string;
@@ -10,6 +11,7 @@ interface CartItem {
   imgSrc: string;
 }
 
+// Define the interface for the Cart Store
 interface CartStore {
   cartItems: CartItem[];
   addItem: (item: CartItem) => void;
@@ -19,19 +21,24 @@ interface CartStore {
   clearCart: () => void;
 }
 
+// Create the Zustand store with persistence
 const useCart = create<CartStore>()(
   persist(
     (set, get) => ({
-      cartItems: [],
+      cartItems: [], // Initial state of cart items
+
+       // Function to add an item to the cart
       addItem: (data: CartItem) => {
         const { id, title, imgSrc, price } = data;
         const currentItems = get().cartItems;
         const isExisting = currentItems.find((cartItem) => cartItem.id === id);
 
+         // Check if the item already exists in the cart
         if (isExisting) {
           return toast("Item already in cart");
         }
 
+         // Add the new item to the cart
         set((state) => ({
           cartItems: [
             ...state.cartItems,
@@ -40,6 +47,7 @@ const useCart = create<CartStore>()(
         }));
         toast.success("Item added to cart", { icon: "🛒" });
       },
+       // Function to remove an item from the cart
       removeItem: (idToRemove: string) => {
         set((state) => {
           const newCartItems = state.cartItems.filter(
@@ -49,6 +57,8 @@ const useCart = create<CartStore>()(
         });
         toast.success("Item removed from cart");
       },
+      
+      // Function to increase the quantity of an item in the cart
       increaseQuantity: (idToIncrease: string) => {
         set((state) => {
           const newCartItems = state.cartItems.map((cartItem) =>
@@ -60,6 +70,8 @@ const useCart = create<CartStore>()(
         });
         toast.success("Item quantity increased");
       },
+
+      // Function to decrease the quantity of an item in the cart
       decreaseQuantity: (idToDecrease: string) => {
         set((state) => {
           const newCartItems = state.cartItems.map((cartItem) =>
@@ -71,6 +83,8 @@ const useCart = create<CartStore>()(
         });
         toast.success("Item quantity decreased");
       },
+
+      // Function to clear all items from the cart
       clearCart: () => {
         set((state) => {
           if (state.cartItems.length === 0) return state;
