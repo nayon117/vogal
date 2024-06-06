@@ -23,4 +23,37 @@ export const GET = async (req: NextRequest, { params }: { params: { orderId: Str
   }
 }
 
+export const PATCH = async (req: NextRequest, { params }: { params: { orderId: string } }) => {
+    try {
+      await connectToDatabase();
+      const data = await req.json();
+      const updatedOrder = await Order.findByIdAndUpdate(params.orderId, data, { new: true });
+  
+      if (!updatedOrder) {
+        return new NextResponse(JSON.stringify({ message: "Order Not Found" }), { status: 404 });
+      }
+  
+      return NextResponse.json(updatedOrder, { status: 200 });
+    } catch (err) {
+      console.log("[orderId_PATCH]", err);
+      return new NextResponse("Internal Server Error", { status: 500 });
+    }
+  };
+  
+  export const DELETE = async (req: NextRequest, { params }: { params: { orderId: string } }) => {
+    try {
+      await connectToDatabase();
+      const deletedOrder = await Order.findByIdAndDelete(params.orderId);
+  
+      if (!deletedOrder) {
+        return new NextResponse(JSON.stringify({ message: "Order Not Found" }), { status: 404 });
+      }
+  
+      return new NextResponse(JSON.stringify({ message: "Order Deleted Successfully" }), { status: 200 });
+    } catch (err) {
+      console.log("[orderId_DELETE]", err);
+      return new NextResponse("Internal Server Error", { status: 500 });
+    }
+  };
+  
 export const dynamic = "force-dynamic";
