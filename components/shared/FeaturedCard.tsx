@@ -7,14 +7,14 @@ import useCart from "@/lib/hooks/useCart";
 import { Button } from "../ui/button";
 
 interface CardProps {
-  _id: string;
+  id: string;
   title: string;
   price: number;
   imgSrc: string;
   colors?: string[];
 }
 
-const FeaturedCard = ({ _id,title, price, colors, imgSrc }: CardProps) => {
+const FeaturedCard = ({ id,title, price, colors, imgSrc }: CardProps) => {
   const [hover, setHover] = useState(false);
   const cart = useCart();
 
@@ -39,7 +39,7 @@ const FeaturedCard = ({ _id,title, price, colors, imgSrc }: CardProps) => {
              <Button 
               onClick={() => {
                 cart.addItem({
-                  _id,
+                  id,
                   title,
                   price,
                   quantity: 1,

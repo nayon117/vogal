@@ -55,7 +55,7 @@ const Cart = () => {
           <div>
             {cart.cartItems.map((cartItem) => (
               <div
-                key={cartItem._id}
+                key={cartItem.id}
                 className="flex w-full items-center justify-between px-4 py-3 hover:bg-gray-100 max-sm:flex-col max-sm:items-start max-sm:gap-3"
               >
                 <div className="flex items-center">
@@ -76,18 +76,18 @@ const Cart = () => {
                 <div className="flex items-center gap-4">
                   <MinusCircle
                     className="cursor-pointer hover:text-red-100"
-                    onClick={() => cart.decreaseQuantity(cartItem._id)}
+                    onClick={() => cart.decreaseQuantity(cartItem.id)}
                   />
                   <p className="font-bold">{cartItem.quantity}</p>
                   <PlusCircle
                     className="cursor-pointer hover:text-red-100"
-                    onClick={() => cart.increaseQuantity(cartItem._id)}
+                    onClick={() => cart.increaseQuantity(cartItem.id)}
                   />
                 </div>
 
                 <Trash
                   className="cursor-pointer hover:text-red-100"
-                  onClick={() => cart.removeItem(cartItem._id)}
+                  onClick={() => cart.removeItem(cartItem.id)}
                 />
               </div>
             ))}

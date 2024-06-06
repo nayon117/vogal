@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 interface CartItem {
-  _id: string;
+  id: string;
   title: string;
   price: number;
   quantity: number;
@@ -24,25 +24,26 @@ const useCart = create<CartStore>()(
     (set, get) => ({
       cartItems: [],
       addItem: (data: CartItem) => {
-        const { _id, title, imgSrc, price } = data;
+        const { id, title, imgSrc, price } = data;
         const currentItems = get().cartItems;
-        const isExisting = currentItems.find(
-          (cartItem) => cartItem._id === _id
-        );
+        const isExisting = currentItems.find((cartItem) => cartItem.id === id);
 
         if (isExisting) {
           return toast("Item already in cart");
         }
 
         set((state) => ({
-          cartItems: [...state.cartItems, { _id, title, price, imgSrc, quantity: 1 }],
+          cartItems: [
+            ...state.cartItems,
+            { id, title, price, imgSrc, quantity: 1 },
+          ],
         }));
         toast.success("Item added to cart", { icon: "🛒" });
       },
       removeItem: (idToRemove: string) => {
         set((state) => {
           const newCartItems = state.cartItems.filter(
-            (cartItem) => cartItem._id !== idToRemove
+            (cartItem) => cartItem.id !== idToRemove
           );
           return { cartItems: newCartItems };
         });
@@ -51,7 +52,7 @@ const useCart = create<CartStore>()(
       increaseQuantity: (idToIncrease: string) => {
         set((state) => {
           const newCartItems = state.cartItems.map((cartItem) =>
-            cartItem._id === idToIncrease
+            cartItem.id === idToIncrease
               ? { ...cartItem, quantity: cartItem.quantity + 1 }
               : cartItem
           );
@@ -62,7 +63,7 @@ const useCart = create<CartStore>()(
       decreaseQuantity: (idToDecrease: string) => {
         set((state) => {
           const newCartItems = state.cartItems.map((cartItem) =>
-            cartItem._id === idToDecrease
+            cartItem.id === idToDecrease
               ? { ...cartItem, quantity: Math.max(cartItem.quantity - 1, 0) }
               : cartItem
           );

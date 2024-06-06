@@ -13,9 +13,9 @@ const TopSeller = () => {
       </div>
       <Swiper spaceBetween={50} slidesPerView={4}>
         {topSeller?.map((item) => (
-          <SwiperSlide key={item._id}>
+          <SwiperSlide key={item.id}>
             <FeaturedCard
-              _id={item._id}
+              id={item.id}
               title={item.title}
               price={item.price}
               imgSrc={item.imgSrc}

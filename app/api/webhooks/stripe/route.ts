@@ -19,6 +19,14 @@ export const POST = async (req: NextRequest) => {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object
 
+       // Check if the order has already been created
+       const existingOrder = await Order.findOne({ sessionId: session.id });
+
+       if (existingOrder) {
+         // If the order exists, return success response
+         return new NextResponse("Order already created", { status: 200 });
+       }
+
       const customerInfo = {
         clerkId: session?.client_reference_id,
         name: session?.customer_details?.name,

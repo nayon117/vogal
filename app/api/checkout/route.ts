@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
           product_data: {
             name: cartItem.title,
             metadata: {
-              productId: cartItem._id,
+              productId: cartItem.id,
             },
           },
           unit_amount: cartItem.price * 100,

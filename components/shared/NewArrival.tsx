@@ -12,8 +12,8 @@ const NewArrival = () => {
       <div className="mt-10 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 ">
         {newArrival?.map((item) => (
           <FeaturedCard
-            key={item._id}
-            _id={item._id}
+            key={item.id}
+            id={item.id}
             title={item.title}
             price={item.price}
             imgSrc={item.imgSrc}
