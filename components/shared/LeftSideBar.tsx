@@ -10,7 +10,9 @@ const LeftSideBar = () => {
 
   return (
     <div className="sticky left-0 top-0 flex h-screen flex-col gap-16 bg-slate-100/50 p-10 shadow-xl max-lg:hidden">
-      <p className="text-2xl font-semibold text-black">Vogal</p>
+     <Link href="/">
+     <p className="text-2xl font-semibold text-black">Vogal</p>
+     </Link>
 
       <div className="flex flex-col gap-12">
         {dashLinks.map((link) => (
