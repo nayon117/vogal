@@ -19,8 +19,8 @@ interface CartStore {
   clearCart: () => void;
 }
 
-const useCart = create(
-  persist<CartStore>(
+const useCart = create<CartStore>()(
+  persist(
     (set, get) => ({
       cartItems: [],
       addItem: (data: CartItem) => {
@@ -34,37 +34,49 @@ const useCart = create(
           return toast("Item already in cart");
         }
 
-        set({
-          cartItems: [...currentItems, { _id, title, price, imgSrc,quantity:1 }],
-        });
+        set((state) => ({
+          cartItems: [...state.cartItems, { _id, title, price, imgSrc, quantity: 1 }],
+        }));
         toast.success("Item added to cart", { icon: "🛒" });
       },
       removeItem: (idToRemove: string) => {
-        const newCartItems = get().cartItems.filter(
-          (cartItem) => cartItem._id !== idToRemove
-        );
-        set({ cartItems: newCartItems });
+        set((state) => {
+          const newCartItems = state.cartItems.filter(
+            (cartItem) => cartItem._id !== idToRemove
+          );
+          return { cartItems: newCartItems };
+        });
         toast.success("Item removed from cart");
       },
-      increaseQuantity: (idToIncrease: String) => {
-        const newCartItems = get().cartItems.map((cartItem) =>
-          cartItem._id === idToIncrease
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        );
-        set({ cartItems: newCartItems });
+      increaseQuantity: (idToIncrease: string) => {
+        set((state) => {
+          const newCartItems = state.cartItems.map((cartItem) =>
+            cartItem._id === idToIncrease
+              ? { ...cartItem, quantity: cartItem.quantity + 1 }
+              : cartItem
+          );
+          return { cartItems: newCartItems };
+        });
         toast.success("Item quantity increased");
       },
-      decreaseQuantity: (idToDecrease: String) => {
-        const newCartItems = get().cartItems.map((cartItem) =>
-          cartItem._id === idToDecrease
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem
-        );
-        set({ cartItems: newCartItems });
+      decreaseQuantity: (idToDecrease: string) => {
+        set((state) => {
+          const newCartItems = state.cartItems.map((cartItem) =>
+            cartItem._id === idToDecrease
+              ? { ...cartItem, quantity: Math.max(cartItem.quantity - 1, 0) }
+              : cartItem
+          );
+          return { cartItems: newCartItems };
+        });
         toast.success("Item quantity decreased");
       },
-      clearCart: () => set({ cartItems: [] }),
+      clearCart: () => {
+        set((state) => {
+          if (state.cartItems.length === 0) return state;
+          return { cartItems: [] };
+        });
+        toast.success("Cart cleared");
+      },
     }),
     {
       name: "cart-storage",

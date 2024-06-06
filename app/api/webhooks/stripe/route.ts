@@ -1,56 +1,82 @@
-import { stripe } from "@/lib/stripe";
+
 import { NextRequest, NextResponse } from "next/server";
+import { stripe } from "@/lib/stripe";
+import { connectToDatabase } from "@/lib/mongoose";
+import Order from "@/database/models/order.model";
+import Customer from "@/database/models/customer.model";
 
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
-
-export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
-}
-
-export async function POST(req: NextRequest) {
+export const POST = async (req: NextRequest) => {
   try {
-    const { cartItems, customer } = await req.json();
+    const rawBody = await req.text()
+    const signature = req.headers.get("Stripe-Signature") as string
 
-    if (!cartItems || !customer) {
-      return new NextResponse("Not enough data to checkout", { status: 400 });
+    const event = stripe.webhooks.constructEvent(
+      rawBody,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    )
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object
+
+      const customerInfo = {
+        clerkId: session?.client_reference_id,
+        name: session?.customer_details?.name,
+        email: session?.customer_details?.email,
+      }
+
+      const shippingAddress = {
+        street: session?.shipping_details?.address?.line1,
+        city: session?.shipping_details?.address?.city,
+        state: session?.shipping_details?.address?.state,
+        postalCode: session?.shipping_details?.address?.postal_code,
+        country: session?.shipping_details?.address?.country,
+      }
+
+      const retrieveSession = await stripe.checkout.sessions.retrieve(
+        session.id,
+        { expand: ["line_items.data.price.product"]}
+      )
+
+      const lineItems = await retrieveSession?.line_items?.data
+
+      const orderItems = lineItems?.map((item: any) => {
+        return {
+          product: item.price.product.metadata.productId,
+          quantity: item.quantity,
+          name:item.price.product.name
+        }
+      })
+
+      await connectToDatabase()
+
+      const newOrder = new Order({
+        customerClerkId: customerInfo.clerkId,
+        products: orderItems,
+        shippingAddress,
+        shippingRate: session?.shipping_cost?.shipping_rate,
+        totalAmount: session.amount_total ? session.amount_total / 100 : 0,
+      })
+
+      await newOrder.save()
+
+      let customer = await Customer.findOne({ clerkId: customerInfo.clerkId })
+
+      if (customer) {
+        customer.orders.push(newOrder._id)
+      } else {
+        customer = new Customer({
+          ...customerInfo,
+          orders: [newOrder._id],
+        })
+      }
+
+      await customer.save()
     }
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      shipping_address_collection: {
-        allowed_countries: ["US", "CA"],
-      },
-      shipping_options: [
-        { shipping_rate: "shr_1POKpj00EBsrqnCjzReGJMfd" },
-        { shipping_rate: "shr_1POKne00EBsrqnCjsvYHUgJu" },
-      ],
-      line_items: cartItems.map((cartItem: any) => ({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: cartItem.title,
-            metadata: {
-              productId: cartItem._id,
-            },
-          },
-          unit_amount: cartItem.price * 100,
-        },
-        quantity: cartItem.quantity,
-      })),
-      client_reference_id: customer.clerkId,
-      success_url: `${process.env.NEXT_PUBLIC_API_URL}/payment_success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_API_URL}/cart`,
-    });
-
-    return NextResponse.json(session, { headers: corsHeaders });
+    return new NextResponse("Order created", { status: 200 })
   } catch (err) {
-    console.log("[checkout_POST]", err);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    console.log("[webhooks_POST]", err)
+    return new NextResponse("Failed to create the order", { status: 500 })
   }
 }

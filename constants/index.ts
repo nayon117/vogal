@@ -30,8 +30,8 @@ export const navbarLinks: NavbarLink[] = [
     label: "BLOG",
   },
   {
-    route: "/buy-now",
-    label: "BUY NOW",
+    route: "/dashboard",
+    label: "DASHBOARD",
   },
 ];
 
