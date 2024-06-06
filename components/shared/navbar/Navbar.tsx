@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <nav className=" fixed z-50 flex  w-full items-center justify-between gap-4 p-4  sm:px-12">
       <Link className="flex items-center gap-1" href="/">
-        <p className=" max-sm:hidden">Vogal</p>
+        <p className="text-2xl font-semibold max-sm:hidden">Vogal</p>
       </Link>
 
       <div className="flex gap-2">

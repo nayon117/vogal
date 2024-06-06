@@ -17,7 +17,7 @@ const NewArrival = () => {
             title={item.title}
             price={item.price}
             imgSrc={item.imgSrc}
-            colors={['#808000', '#000000']}
+            colors={item.colors}
           />
         ))}
       </div>

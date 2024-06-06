@@ -11,7 +11,19 @@ const TopSeller = () => {
       <div>
         <h1 className="mb-6 text-center text-2xl font-semibold">Top Sellers</h1>
       </div>
-      <Swiper spaceBetween={50} slidesPerView={4}>
+      <Swiper 
+      spaceBetween={50}
+      breakpoints={{
+        // when window width is >= 640px
+        640: {
+          slidesPerView: 2,
+        },
+        // when window width is >= 768px
+        768: {
+          slidesPerView: 4,
+        },
+      }}
+      >
         {topSeller?.map((item) => (
           <SwiperSlide key={item.id}>
             <FeaturedCard
@@ -19,7 +31,7 @@ const TopSeller = () => {
               title={item.title}
               price={item.price}
               imgSrc={item.imgSrc}
-              colors={['#808000', '#000000']}
+              colors={item.colors}
             />
           </SwiperSlide>
         ))}

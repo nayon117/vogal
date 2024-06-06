@@ -7,8 +7,8 @@ const Footer = () => {
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-2">
             <div className="border-b border-gray-100 py-8 lg:order-last lg:border-b-0 lg:border-s lg:py-16 lg:ps-16">
-              <div className="block text-teal-600 lg:hidden">
-               Vogal
+              <div className="block text-xl font-medium text-black lg:hidden">
+                Vogal
               </div>
 
               <div className="mt-8 space-y-4 lg:mt-0">
@@ -33,12 +33,12 @@ const Footer = () => {
                     <input
                       type="email"
                       id="UserEmail"
-                      placeholder="john@rhcp.com"
-                      className="w-full border-none focus:border-transparent focus:ring-transparent sm:text-sm"
+                      placeholder="john@gmail.com"
+                      className="w-full border-none outline-none  sm:text-sm"
                     />
 
                     <Button className="mt-1 w-full rounded  px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-none  sm:mt-0 sm:w-auto sm:shrink-0">
-                        Subscribe
+                      Subscribe
                     </Button>
                   </div>
                 </form>
@@ -46,13 +46,11 @@ const Footer = () => {
             </div>
 
             <div className="py-8 lg:py-16 lg:pe-16 ">
-              <div className="hidden text-teal-600 lg:block">
+              <div className="hidden text-2xl font-semibold text-black lg:block">
                 Vogal
               </div>
 
               <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
-                
-
                 <div>
                   <p className="font-medium text-gray-900">Company</p>
 
@@ -160,7 +158,7 @@ const Footer = () => {
                 </ul>
 
                 <p className="mt-8 text-xs text-gray-500">
-                  &copy; 2022. Company Name. All rights reserved.
+                  &copy; 2024. Vogal. All rights reserved.
                 </p>
               </div>
             </div>

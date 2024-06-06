@@ -12,7 +12,16 @@ const News = () => {
         <h2 className="text-center text-2xl font-semibold">News & Articles</h2>
       </div>
       <div className="mt-6">
-        <Swiper spaceBetween={50} slidesPerView={3}>
+        <Swiper breakpoints={{
+        // when window width is >= 640px
+        640: {
+          slidesPerView: 2,
+        },
+        // when window width is >= 768px
+        768: {
+          slidesPerView: 4,
+        },
+      }}>
           {blogs?.map((item, index) => (
             <SwiperSlide key={index}>
               <CardItem title={item.title} imgSrc={item.imgSrc} />

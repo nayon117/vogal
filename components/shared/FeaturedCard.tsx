@@ -63,7 +63,7 @@ const FeaturedCard = ({ id, title, price, colors, imgSrc }: CardProps) => {
           {colors?.map((color, index) => (
             <span
               key={index}
-              className="size-4 rounded-full border border-gray-300"
+              className="size-3 rounded-full border border-gray-300"
               style={{ backgroundColor: color }}
             ></span>
           ))}

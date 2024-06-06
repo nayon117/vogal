@@ -1,3 +1,4 @@
+import Banner from "@/components/shared/Banner";
 import InfoBar from "@/components/shared/InfoBar";
 import NewArrival from "@/components/shared/NewArrival";
 import News from "@/components/shared/News";
@@ -9,12 +10,13 @@ const HomePage = () => {
   return (
     <section className="">
       <div className="">
-        <Image
+        {/* <Image
           src="/assets/images/banner.png"
           alt="banner image"
           width={1920}
           height={1080}
-        />
+        /> */}
+        <Banner/>
         <TopCategories />
         <NewArrival />
         
